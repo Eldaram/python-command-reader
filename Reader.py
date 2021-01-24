@@ -8,7 +8,7 @@ class Reader(object):
     """
     It read a string command and execute it, if it returns somthing, it will return it AND print it
     """
-    def read(string):
+    def read(self, string):
         sliced_str = string.split()
         if sliced_str[0] in self.cmds:
             print(sliced_str)
@@ -25,8 +25,8 @@ class Reader(object):
     cmd added to cmds MUST have the following form : cmd([must_arg_list], followed_string OR [followed_arg_list])
     func is a function / args_min is a number / is_text is a boolean
     """
-    def add_cmds(name, func, args_min, is_text):
+    def add_cmds(self, name, func, args_min, is_text):
         if " " in name:
             print("Error Reader.add_cmds, name should not contain spaces")
         else :
-            cmds[name] = (func,args_min,is_text)
+            self.cmds[name] = (func,args_min,is_text)
