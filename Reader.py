@@ -11,7 +11,9 @@ class Reader(object):
     def read(self, string):
         sliced_str = string.split()
         if len(sliced_str) != 0 and sliced_str[0] in self.cmds:
-            args_need = sliced_str[1:self.cmds[sliced_str[0]][1]]
+            sliced_str = custom_split(string, " ", self.cmds[sliced_str[0]][1]+1)
+
+            args_need = sliced_str[1:1+self.cmds[sliced_str[0]][1]]
             args_supp = sliced_str[self.cmds[sliced_str[0]][1]+1:]
             if not self.cmds[sliced_str[0]][2]:
                 return self.cmds[sliced_str[0]][0](args_need,args_supp)
@@ -37,3 +39,20 @@ class Reader(object):
             print("Error Reader.add_cmds, name should not contain spaces")
         else :
             self.cmds[name] = (func,args_min,is_text)
+
+
+"""
+A custum split to help building a split with multiple spaces
+"""
+def custom_split(string, ch, num):
+    return_v = [""]
+    i = 0
+    while i < len(string) and (string[i] != " " or return_v[len(return_v)-1] == "" or len(return_v) != num):
+        if string[i] != " ":
+            return_v[len(return_v)-1] += string[i]
+        elif return_v[len(return_v)-1] != "":
+            return_v.append("")
+        i += 1
+    return_v.append(string[i+1:])
+    print(return_v)
+    return return_v
